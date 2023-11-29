@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Proyecto</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+  <h1>Venta de Vehículos</h1>
+  <label for="seleccionarEmpresa">Seleccionar Vehículo:</label>
+  <select id="seleccionarEmpresa" name="seleccionarEmpresa">
+    <% empresas.forEach(empresa => { %>
+      <option value="<%= empresa.nombre %>"><%= empresa.nombre %></option>
+    <% }); %>
+  </select>
+
+  <!-- Formulario para guardar transacción -->
+  <form id="formularioTransaccion" action="/guardarTransaccion" method="post">
+    <!-- Campos ocultos para la empresa y el estudiante seleccionados -->
+    <input type="hidden" id="empresaSeleccionada" name="empresaSeleccionada" value="">
+    <input type="hidden" id="estudianteSeleccionado" name="estudianteSeleccionado" value="">
+
+    <!-- Campos adicionales para la transacción -->
+    <label for="nombreCliente">Nombre del Cliente:</label>
+    <input type="text" id="nombreCliente" name="nombreCliente" required>
+
+    <label for="tipoVenta">Tipo de Venta:</label>
+    <select id="tipoVenta" name="tipoVenta">
+      <option value="contado">Contado</option>
+      <option value="financiado">Financiado</option>
+      <option value="leasing">Leasing</option>
+    </select>
+
+    <button type="button" onclick="guardarSeleccion()">Guardar Transacción</button>
+  </form>
+
+  <script src="/script.js"></script>
+
+  <script>
+    // Función para guardar la selección antes de enviar el formulario
+    function guardarSeleccion() {
+      const empresaSeleccionada = document.getElementById('seleccionarEmpresa').value;
+      const nombreCliente = document.getElementById('nombreCliente').value;
+      const tipoVenta = document.getElementById('tipoVenta').value;
+
+      // Asignar valores a los campos ocultos
+      document.getElementById('empresaSeleccionada').value = empresaSeleccionada;
+      document.getElementById('estudianteSeleccionado').value = nombreCliente; // Nota: aquí puedes asignar el nombre del cliente si es lo que deseas
+
+      // Enviar el formulario
+      document.getElementById('formularioTransaccion').submit();
+    }
+  </script>
+</body>
+</html>
